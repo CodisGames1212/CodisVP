@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: build-${{ github.workflow }}-${{ github.ref }}
+  group: build-${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 env:
@@ -48,6 +48,11 @@ jobs:
       - name: Install Apple build tools
         if: runner.os == 'macOS'
         run: brew install ninja nasm pkg-config
+      - uses: actions/setup-java@v5
+        if: matrix.platform == 'android'
+        with:
+          distribution: temurin
+          java-version: '17'
       - uses: android-actions/setup-android@v3
         if: matrix.platform == 'android'
       - name: Install pinned Android NDK
