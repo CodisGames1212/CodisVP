@@ -1,0 +1,81 @@
+name: Release CodisVP
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: Successful Build CodisVP run to publish
+        required: true
+        type: string
+      tag:
+        description: Release tag (for example v0.1.0)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: release-codisvp
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      BUILD_RUN_ID: ${{ inputs.build_run_id }}
+      RELEASE_TAG: ${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify build provenance
+        run: |
+          [[ "$BUILD_RUN_ID" =~ ^[0-9]+$ ]]
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BUILD_RUN_ID" > build-run.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          run = json.loads(Path('build-run.json').read_text())
+          assert run['status'] == 'completed' and run['conclusion'] == 'success'
+          assert run['path'] == '.github/workflows/build-plugin.yml'
+          assert run['repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('SOURCE_COMMIT=' + run['head_sha'] + '\n')
+          PY
+          source_commit=$(python -c "import json; print(json.load(open('build-run.json'))['head_sha'])")
+          git merge-base --is-ancestor "$source_commit" origin/main
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release already exists; refusing to replace published assets." >&2
+            exit 1
+          fi
+      - name: Download validated add-on ZIP
+        uses: actions/download-artifact@v4
+        with:
+          name: CodisVP-all-platforms
+          path: dist
+          run-id: ${{ inputs.build_run_id }}
+          github-token: ${{ github.token }}
+      - name: Download corresponding relinking materials
+        uses: actions/download-artifact@v4
+        with:
+          pattern: relink-*
+          path: build-release/relink
+          run-id: ${{ inputs.build_run_id }}
+          github-token: ${{ github.token }}
+      - name: Verify binaries and prepare release assets
+        run: |
+          python tools/ci/verify_package.py dist/CodisVP.zip
+          python tools/ci/release_assets.py
+      - name: Publish release with all assets
+        run: |
+          gh release create "$RELEASE_TAG" dist/* \
+            --target "$SOURCE_COMMIT" --title "CodisVP $RELEASE_TAG" \
+            --notes-file build-release/release-notes.md --draft
+          gh release edit "$RELEASE_TAG" --draft=false --latest

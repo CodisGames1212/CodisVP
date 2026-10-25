@@ -30,6 +30,14 @@ Bindings target the Godot 4.3 API. Runtime compatibility has been tested on Godo
 
 ## GitHub Actions builds
 
+Download installable binaries from [GitHub Releases](https://github.com/CodisGames1212/CodisVP/releases).
+Extract `CodisVP.zip` into your project. Each release also provides matching source,
+FFmpeg relinking materials, build provenance, and SHA-256 checksums.
+
+Maintainers can publish a successful build under **Actions → Release CodisVP**
+by supplying its run ID and a version tag such as `v0.1.0`. The release workflow
+verifies binary architectures and publishes the complete set of assets together.
+
 `.github/workflows/build-plugin.yml` adapts the parallel-build and merged-add-on
 pattern from [godot-plus-plus](https://github.com/nikoladevelops/godot-plus-plus)
 to this project's CMake build and FFmpeg dependencies. It runs on pushes, pull
