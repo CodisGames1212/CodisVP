@@ -67,7 +67,7 @@ kit="$root/build-ci/relink"
 mkdir -p "$kit/ffmpeg" "$kit/native" "$kit/source" addons/codisvp/licenses
 cp "$prefix"/lib/*.a "$kit/ffmpeg/"
 cp -R build-ci/native/CMakeFiles/codisvp.dir "$kit/native/"
-find build-ci/native/godot-cpp -name '*.a' -exec cp {} "$kit/native/" \;
+find build-ci/native/bin -name '*.a' -exec cp {} "$kit/native/" \;
 cp build-ci/native/build.ninja build-ci/native/CMakeCache.txt "$kit/native/"
 cp build-ci/native/CMakeFiles/rules.ninja "$kit/native/"
 cp build-ci/ffmpeg.tar.xz "$kit/source/"

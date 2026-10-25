@@ -12,7 +12,13 @@ find_package(Threads REQUIRED)
 add_library(codisvp SHARED native/codisvp.cpp native/decoder.cpp)
 target_link_libraries(codisvp PRIVATE godot-cpp Threads::Threads)
 target_compile_definitions(codisvp PRIVATE NOMINMAX)
-find_path(FFMPEG_INCLUDE libavcodec/avcodec.h HINTS "${FFMPEG_ROOT}/include" REQUIRED)
+if(FFMPEG_ROOT)
+  # The SDK is outside the platform sysroot when cross-compiling for mobile.
+  find_path(FFMPEG_INCLUDE libavcodec/avcodec.h PATHS "${FFMPEG_ROOT}/include"
+    NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH REQUIRED)
+else()
+  find_path(FFMPEG_INCLUDE libavcodec/avcodec.h REQUIRED)
+endif()
 target_include_directories(codisvp PRIVATE "${FFMPEG_INCLUDE}")
 option(CODISVP_STATIC_FFMPEG "Link the CI FFmpeg static SDK and its system dependencies" OFF)
 if(CODISVP_STATIC_FFMPEG)
@@ -25,6 +31,10 @@ if(CODISVP_STATIC_FFMPEG)
   string(JOIN " " FFMPEG_SYSTEM_LINK_OPTIONS ${FFMPEG_STATIC_LDFLAGS_OTHER})
   if(FFMPEG_SYSTEM_LINK_OPTIONS)
     target_link_options(codisvp PRIVATE "SHELL:${FFMPEG_SYSTEM_LINK_OPTIONS}")
+  endif()
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux" OR ANDROID)
+    # FFmpeg assembly references must bind to this copy of the static libraries.
+    target_link_options(codisvp PRIVATE "LINKER:-Bsymbolic" "LINKER:--exclude-libs,ALL")
   endif()
 else()
   foreach(component avformat avcodec avutil swscale swresample)
@@ -43,7 +53,8 @@ elseif(APPLE)
 else()
   set(CODISVP_PLATFORM linux)
 endif()
-godot_arch_name(CODISVP_ARCH)
+# Read the result computed inside godot-cpp, where its architecture lists exist.
+get_target_property(CODISVP_ARCH godot-cpp GODOTCPP_ARCH)
 set_target_properties(codisvp PROPERTIES
   PREFIX "" OUTPUT_NAME "codisvp.${CODISVP_PLATFORM}.${CODISVP_ARCH}"
   LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/addons/codisvp/bin"
