@@ -2,6 +2,7 @@ name: Build CodisVP
 
 on:
   push:
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
@@ -77,6 +78,11 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: bash tools/ci/build_unix.sh '${{ matrix.platform }}' '${{ matrix.arch }}'
+      - name: Include add-on documentation and license
+        shell: bash
+        run: |
+          cp LICENSE addons/codisvp/LICENSE
+          cp README.md addons/codisvp/README.md
       - name: Upload platform add-on
         uses: actions/upload-artifact@v4
         with:
