@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://c3ex6eojrbxcx"]
+
+[ext_resource type="Script" uid="uid://dbf66ty5avdl6" path="res://addons/codisvp/demo/scripts/codis_vp_demo.gd" id="1_gkr82"]
+
+[node name="CodisVP_Demo" type="Control" unique_id=464659884]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gkr82")

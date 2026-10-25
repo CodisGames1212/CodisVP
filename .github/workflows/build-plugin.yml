@@ -1,0 +1,105 @@
+name: Build CodisVP
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GODOT_CPP_REVISION: 507ed9d840c01a3c5b2a39af8bb4000bfac30bf5
+  FFMPEG_VERSION: 8.0.1
+
+jobs:
+  build:
+    name: ${{ matrix.platform }} / ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { platform: windows, arch: x86_64, os: windows-2022 }
+          - { platform: linux, arch: x86_64, os: ubuntu-22.04 }
+          - { platform: linux, arch: arm64, os: ubuntu-22.04-arm }
+          - { platform: macos, arch: x86_64, os: macos-14 }
+          - { platform: macos, arch: arm64, os: macos-14 }
+          - { platform: android, arch: arm64, os: ubuntu-22.04 }
+          - { platform: android, arch: x86_64, os: ubuntu-22.04 }
+          - { platform: ios, arch: arm64, os: macos-14 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch pinned Godot bindings
+        shell: bash
+        run: |
+          git clone https://github.com/godotengine/godot-cpp.git third_party/godot-cpp
+          git -C third_party/godot-cpp checkout "$GODOT_CPP_REVISION"
+      - name: Install Linux build tools
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build nasm pkg-config
+      - name: Install Apple build tools
+        if: runner.os == 'macOS'
+        run: brew install ninja nasm pkg-config
+      - uses: android-actions/setup-android@v3
+        if: matrix.platform == 'android'
+      - name: Install pinned Android NDK
+        if: matrix.platform == 'android'
+        run: sdkmanager 'ndk;27.2.12479018'
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+        with:
+          arch: x64
+      - name: Build Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          ./tools/setup_windows.ps1 -GodotCppRevision $env:GODOT_CPP_REVISION
+          $sdk = (Resolve-Path third_party/ffmpeg/ffmpeg-n8.1-latest-win64-lgpl-shared-8.1).Path
+          cmake -S . -B build-ci -G Ninja -DCMAKE_BUILD_TYPE=Release "-DFFMPEG_ROOT=$sdk" -DGODOTCPP_TARGET=template_release
+          if ($LASTEXITCODE) { throw 'CMake configuration failed' }
+          cmake --build build-ci --parallel 3
+          if ($LASTEXITCODE) { throw 'Native build failed' }
+          Copy-Item third_party/ffmpeg-release.json addons/codisvp/licenses/ffmpeg-release.json
+      - name: Build FFmpeg and extension
+        if: runner.os != 'Windows'
+        shell: bash
+        run: bash tools/ci/build_unix.sh '${{ matrix.platform }}' '${{ matrix.arch }}'
+      - name: Upload platform add-on
+        uses: actions/upload-artifact@v4
+        with:
+          name: codisvp-${{ matrix.platform }}-${{ matrix.arch }}
+          path: addons/codisvp/
+          if-no-files-found: error
+      - name: Upload LGPL relinking materials
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: relink-${{ matrix.platform }}-${{ matrix.arch }}
+          path: build-ci/relink/
+          if-no-files-found: error
+
+  package:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: codisvp-*
+          path: addons/codisvp
+          merge-multiple: true
+      - name: Validate and package add-on
+        run: python tools/ci/package.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CodisVP-all-platforms
+          path: dist/CodisVP.zip
+          if-no-files-found: error

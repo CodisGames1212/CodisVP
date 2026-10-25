@@ -1,0 +1,7 @@
+{
+    "godot_cpp_revision":  "507ed9d840c01a3c5b2a39af8bb4000bfac30bf5",
+    "ffmpeg_asset":  "ffmpeg-n8.1-latest-win64-lgpl-shared-8.1.zip",
+    "ffmpeg_download":  "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n8.1-latest-win64-lgpl-shared-8.1.zip",
+    "ffmpeg_digest":  "sha256:210fc2bb1e9caf93500c97072ef9769bfcd39a8469a92f62c55206b112317496",
+    "ffmpeg_release":  "latest"
+}

@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/generated/streamflow_astria.png" id="1_art"]
+[ext_resource type="Script" path="res://addons/codisvp/demo/scripts/video_thumbnail.gd" id="3_thumbnail"]
+[ext_resource type="Script" path="res://addons/codisvp/demo/scripts/library_video_card.gd" id="2_script"]
+
+[node name="LibraryVideoCard" type="Button"]
+custom_minimum_size = Vector2(0, 80)
+mouse_filter = 2
+focus_mode = 0
+size_flags_horizontal = 3
+alignment = 0
+script = ExtResource("2_script")
+
+[node name="CardRow" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Thumbnail" type="TextureButton" parent="CardRow"]
+custom_minimum_size = Vector2(112, 64)
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("1_art")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Description" type="VBoxContainer" parent="CardRow"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="EpisodeTitle" type="Label" parent="CardRow/Description"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.980392, 1)
+theme_override_font_sizes/font_size = 15
+text = "Video title"
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Genre" type="Label" parent="CardRow/Description"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.156863, 0.784314, 0.709804, 1)
+theme_override_font_sizes/font_size = 12
+text = "VIDEO FILE · MP4"
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="Metadata" type="Label" parent="CardRow/Description"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.666667, 0.705882, 0.760784, 1)
+theme_override_font_sizes/font_size = 11
+text = "Folder path"
+text_overrun_behavior = 3
+mouse_filter = 2

@@ -1,0 +1,533 @@
+[gd_scene format=3 uid="uid://i1luu2nw11pw"]
+
+[ext_resource type="Script" uid="uid://b65wuivy86rbh" path="res://addons/codisvp/demo/scripts/codis_vp_demo_advance_ui.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://addons/codisvp/demo/assets/streamflow_astria.png" id="2_art"]
+
+[node name="CodisVPDemo_AdvanceUI" type="Control" unique_id=802795028]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1994597778]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0627451, 0.0941176, 0.129412, 1)
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=1120666529]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 16
+
+[node name="Page" type="VBoxContainer" parent="Margin" unique_id=1193953463]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Header" type="PanelContainer" parent="Margin/Page" unique_id=2025091402]
+visible = false
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="HeaderRow" type="HBoxContainer" parent="Margin/Page/Header" unique_id=252424944]
+layout_mode = 2
+
+[node name="BrandStream" type="Label" parent="Margin/Page/Header/HeaderRow" unique_id=362592571]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.156863, 0.784314, 0.709804, 1)
+theme_override_font_sizes/font_size = 23
+text = "Codis"
+
+[node name="BrandFlow" type="Label" parent="Margin/Page/Header/HeaderRow" unique_id=5146209]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.980392, 1)
+theme_override_font_sizes/font_size = 21
+text = "  Video Player"
+
+[node name="HeaderSpacer" type="Control" parent="Margin/Page/Header/HeaderRow" unique_id=459465790]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="GuestLabel" type="Label" parent="Margin/Page/Header/HeaderRow" unique_id=737096151]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.666667, 0.705882, 0.760784, 1)
+text = "●  Guest"
+
+[node name="ContentScroll" type="ScrollContainer" parent="Margin/Page" unique_id=1621184201]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="ContentRow" type="BoxContainer" parent="Margin/Page/ContentScroll" unique_id=754691305]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FeaturedColumn" type="VBoxContainer" parent="Margin/Page/ContentScroll/ContentRow" unique_id=1746410409]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="PlayerFrame" type="PanelContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn" unique_id=573048899]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PlayerStack" type="Control" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame" unique_id=1404944859]
+custom_minimum_size = Vector2(0, 220)
+custom_maximum_size = Vector2(4096, 4096)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VideoAspectContainer" type="AspectRatioContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack" unique_id=1174158200]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.7777778
+
+[node name="PlayerSurface" type="Control" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer" unique_id=686753915]
+clip_contents = true
+layout_mode = 2
+
+[node name="Artwork" type="TextureRect" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=1030285675]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_art")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=434389498]
+visible = false
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand = true
+
+[node name="OverlayScrim" type="ColorRect" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=1125146739]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.015, 0.025, 0.04, 0.32)
+
+[node name="TopBar" type="HBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=606442345]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 16.0
+offset_top = 10.0
+offset_right = -16.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_constants/separation = 6
+
+[node name="HSeparator" type="HSeparator" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/TopBar" unique_id=165922445]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BackButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/TopBar" unique_id=1553022618]
+visible = false
+custom_minimum_size = Vector2(42, 40)
+layout_mode = 2
+tooltip_text = "Back"
+text = "←"
+flat = true
+
+[node name="OverlayTitle" type="Label" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/TopBar" unique_id=1995795437]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 17
+text = "ASTRIA"
+vertical_alignment = 1
+
+[node name="HDRButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/TopBar" unique_id=909808423]
+custom_minimum_size = Vector2(46, 40)
+layout_mode = 2
+tooltip_text = "HDR options"
+text = "  HDR  "
+flat = true
+
+[node name="CaptionsButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/TopBar" unique_id=2074232438]
+custom_minimum_size = Vector2(42, 40)
+layout_mode = 2
+tooltip_text = "Captions"
+text = "  CC  "
+flat = true
+
+[node name="AudioButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/TopBar" unique_id=698229994]
+custom_minimum_size = Vector2(42, 40)
+layout_mode = 2
+tooltip_text = "Audio tracks"
+theme_override_font_sizes/font_size = 18
+text = "   ♫   "
+flat = true
+
+[node name="MenuButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/TopBar" unique_id=1875318401]
+custom_minimum_size = Vector2(42, 40)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(1.5, 1)
+tooltip_text = "More options"
+theme_override_font_sizes/font_size = 20
+text = "   ⋮   "
+flat = true
+
+[node name="SeekZoneButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=447889614]
+visible = false
+custom_minimum_size = Vector2(44, 44)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -24.0
+offset_right = -16.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+tooltip_text = "Double-click the center to play or pause"
+text = "↝"
+flat = true
+
+[node name="ScrubBar" type="HBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=2064368338]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -88.0
+offset_right = -18.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 8
+
+[node name="ElapsedLabel" type="Label" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/ScrubBar" unique_id=560282293]
+custom_minimum_size = Vector2(46, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "00:00"
+vertical_alignment = 1
+
+[node name="OverlayTimeline" type="HSlider" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/ScrubBar" unique_id=1111773339]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+max_value = 1.0
+step = 0.01
+
+[node name="DurationLabel" type="Label" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/ScrubBar" unique_id=855914482]
+custom_minimum_size = Vector2(46, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "00:00"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BottomBar" type="HBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=2008872793]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -50.0
+offset_right = -16.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="OverlayPlayButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/BottomBar" unique_id=829256485]
+custom_minimum_size = Vector2(48, 44)
+layout_mode = 2
+tooltip_text = "Play or pause"
+text = "▶"
+flat = true
+
+[node name="RewindButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/BottomBar" unique_id=1076481546]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Rewind 10 seconds"
+text = "|◀"
+flat = true
+
+[node name="ForwardButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/BottomBar" unique_id=1318577103]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+tooltip_text = "Forward 10 seconds"
+text = "▶|"
+flat = true
+
+[node name="BottomSpacer" type="Control" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/BottomBar" unique_id=979326712]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="SpeedLabel" type="Label" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/BottomBar" unique_id=1295090219]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Speed"
+vertical_alignment = 1
+
+[node name="OverlaySpeedButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/BottomBar" unique_id=968696357]
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+tooltip_text = "Playback speed"
+text = "1.00×"
+flat = true
+
+[node name="FullscreenButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface/BottomBar" unique_id=1685719537]
+custom_minimum_size = Vector2(42, 40)
+layout_mode = 2
+tooltip_text = "Fullscreen"
+theme_override_font_sizes/font_size = 30
+text = "□"
+flat = true
+
+[node name="GestureHint" type="Label" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/PlayerFrame/PlayerStack/VideoAspectContainer/PlayerSurface" unique_id=387256885]
+visible = false
+custom_minimum_size = Vector2(160, 36)
+custom_maximum_size = Vector2(4096, 36)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.74
+anchor_right = 0.92
+anchor_bottom = 0.74
+offset_top = -18.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.94)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 14
+text = "Double-click or double-tap the center to play or pause · Pinch or scroll to zoom"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="FeaturedDetails" type="PanelContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn" unique_id=1723217406]
+layout_mode = 2
+
+[node name="DetailsRow" type="HBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/FeaturedDetails" unique_id=1031659250]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="DetailsCopy" type="VBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/FeaturedDetails/DetailsRow" unique_id=301434165]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="FeaturedTitle" type="Label" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/FeaturedDetails/DetailsRow/DetailsCopy" unique_id=1948379512]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.980392, 1)
+theme_override_font_sizes/font_size = 22
+text = "ASTRIA"
+
+[node name="FeaturedSubtitle" type="Label" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/FeaturedDetails/DetailsRow/DetailsCopy" unique_id=2111380826]
+custom_minimum_size = Vector2(140, 0)
+custom_maximum_size = Vector2(4096, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.666667, 0.705882, 0.760784, 1)
+text = "Sci-Fi Adventure  ·  Now playing"
+autowrap_mode = 3
+
+[node name="SettingsButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/FeaturedColumn/FeaturedDetails/DetailsRow" unique_id=1149744428]
+custom_minimum_size = Vector2(44, 40)
+layout_mode = 2
+tooltip_text = "Settings and themes"
+text = "⚙"
+flat = true
+
+[node name="RightSidebar" type="VBoxContainer" parent="Margin/Page/ContentScroll/ContentRow" unique_id=1381925038]
+custom_minimum_size = Vector2(330, 300)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="LibraryPanel" type="PanelContainer" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar" unique_id=1248700262]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LibraryColumn" type="VBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel" unique_id=1238800272]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="LibraryToolbar" type="HBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel/LibraryColumn" unique_id=860454816]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LibraryHeading" type="Label" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel/LibraryColumn/LibraryToolbar" unique_id=374527781]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.94902, 0.960784, 0.980392, 1)
+theme_override_font_sizes/font_size = 20
+text = "ON THIS DEVICE"
+
+[node name="ScanButton" type="Button" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel/LibraryColumn/LibraryToolbar" unique_id=2020740046]
+layout_mode = 2
+text = "Scan folder…"
+
+[node name="LibrarySearch" type="LineEdit" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel/LibraryColumn" unique_id=1881051743]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+placeholder_text = "Search videos…"
+clear_button_enabled = true
+
+[node name="LibraryStatus" type="Label" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel/LibraryColumn" unique_id=1227903606]
+visible = false
+custom_minimum_size = Vector2(80, 0)
+custom_maximum_size = Vector2(4096, 56)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.666667, 0.705882, 0.760784, 1)
+text = "Choose a folder to scan for local videos. Selected folders will be remembered on this device."
+text_overrun_behavior = 3
+
+[node name="LibraryScroll" type="ScrollContainer" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel/LibraryColumn" unique_id=2072367536]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="LibraryList" type="VBoxContainer" parent="Margin/Page/ContentScroll/ContentRow/RightSidebar/LibraryPanel/LibraryColumn/LibraryScroll" unique_id=2038687858]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="FullscreenLayer" type="CanvasLayer" parent="." unique_id=1621184197]
+
+[node name="FullscreenHost" type="Control" parent="FullscreenLayer" unique_id=1621184198]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FullscreenBackdrop" type="ColorRect" parent="FullscreenLayer/FullscreenHost" unique_id=1621184199]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="PlayerHost" type="Control" parent="FullscreenLayer/FullscreenHost" unique_id=1621184200]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsPopup" type="PopupPanel" parent="." unique_id=5190270]
+size = Vector2i(380, 300)
+
+[node name="SettingsMargin" type="MarginContainer" parent="SettingsPopup" unique_id=1578460835]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 376.0
+offset_bottom = 296.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="SettingsColumn" type="VBoxContainer" parent="SettingsPopup/SettingsMargin" unique_id=2142600043]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SettingsTitle" type="Label" parent="SettingsPopup/SettingsMargin/SettingsColumn" unique_id=1688616072]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Settings"
+
+[node name="ThemeLabel" type="Label" parent="SettingsPopup/SettingsMargin/SettingsColumn" unique_id=331246505]
+layout_mode = 2
+text = "Appearance"
+
+[node name="ThemeOption" type="OptionButton" parent="SettingsPopup/SettingsMargin/SettingsColumn" unique_id=262060243]
+custom_minimum_size = Vector2(300, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScaleLabel" type="Label" parent="SettingsPopup/SettingsMargin/SettingsColumn" unique_id=1966038057]
+layout_mode = 2
+text = "UI scale · 100%"
+
+[node name="UIScaleSlider" type="HSlider" parent="SettingsPopup/SettingsMargin/SettingsColumn" unique_id=1966038056]
+custom_minimum_size = Vector2(300, 34)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.8
+max_value = 1.4
+step = 0.05
+value = 1.0
+
+[node name="SettingsNote" type="Label" parent="SettingsPopup/SettingsMargin/SettingsColumn" unique_id=1966038058]
+custom_minimum_size = Vector2(200, 24)
+custom_maximum_size = Vector2(4096, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.7, 0.76, 1)
+text = "Settings are saved on this device."
+autowrap_mode = 2
+
+[node name="DirectoryDialog" type="FileDialog" parent="." unique_id=721970721]
+title = "Open a Directory"
+file_mode = 2
+access = 1

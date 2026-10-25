@@ -1,0 +1,23 @@
+[configuration]
+entry_symbol = "codisvp_library_init"
+compatibility_minimum = "4.3"
+reloadable = false
+
+[libraries]
+windows.x86_64 = "res://addons/codisvp/bin/codisvp.windows.x86_64.dll"
+linux.x86_64 = "res://addons/codisvp/bin/codisvp.linux.x86_64.so"
+linux.arm64 = "res://addons/codisvp/bin/codisvp.linux.arm64.so"
+macos.arm64 = "res://addons/codisvp/bin/codisvp.macos.arm64.dylib"
+macos.x86_64 = "res://addons/codisvp/bin/codisvp.macos.x86_64.dylib"
+android.arm64 = "res://addons/codisvp/bin/codisvp.android.arm64.so"
+android.x86_64 = "res://addons/codisvp/bin/codisvp.android.x86_64.so"
+ios.arm64 = "res://addons/codisvp/bin/codisvp.ios.arm64.framework"
+
+[dependencies]
+windows.x86_64 = {
+"res://addons/codisvp/bin/avcodec-62.dll": "",
+"res://addons/codisvp/bin/avformat-62.dll": "",
+"res://addons/codisvp/bin/avutil-60.dll": "",
+"res://addons/codisvp/bin/swresample-6.dll": "",
+"res://addons/codisvp/bin/swscale-9.dll": ""
+}

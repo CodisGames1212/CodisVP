@@ -1,0 +1,9 @@
+.godot/
+__pycache__/
+dist/
+build*/
+third_party/
+*.log
+tests/media/
+addons/codisvp/bin/*
+!addons/codisvp/bin/.gitkeep
