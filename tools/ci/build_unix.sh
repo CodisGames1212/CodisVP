@@ -48,7 +48,7 @@ case "$platform" in
     ffargs+=(--enable-cross-compile --target-os=android --arch="$ffarch"
       --cc="$toolchain/${triple}24-clang" --cxx="$toolchain/${triple}24-clang++"
       --ar="$toolchain/llvm-ar" --ranlib="$toolchain/llvm-ranlib"
-      --strip="$toolchain/llvm-strip" --enable-mediacodec)
+      --strip="$toolchain/llvm-strip" --enable-mediacodec --enable-jni)
     cmargs+=("-DCMAKE_TOOLCHAIN_FILE=$ndk/build/cmake/android.toolchain.cmake"
       "-DANDROID_ABI=$abi" -DANDROID_PLATFORM=24 -DANDROID_STL=c++_static)
     ;;
