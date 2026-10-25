@@ -55,6 +55,15 @@ else()
 endif()
 # Read the result computed inside godot-cpp, where its architecture lists exist.
 get_target_property(CODISVP_ARCH godot-cpp GODOTCPP_ARCH)
+if(APPLE AND CMAKE_OSX_ARCHITECTURES)
+  list(LENGTH CMAKE_OSX_ARCHITECTURES CODISVP_APPLE_ARCH_COUNT)
+  if(CODISVP_APPLE_ARCH_COUNT EQUAL 1)
+    # An Intel cross-build on an Apple Silicon runner still reports an arm64 host.
+    list(GET CMAKE_OSX_ARCHITECTURES 0 CODISVP_ARCH)
+  elseif("x86_64" IN_LIST CMAKE_OSX_ARCHITECTURES AND "arm64" IN_LIST CMAKE_OSX_ARCHITECTURES)
+    set(CODISVP_ARCH universal)
+  endif()
+endif()
 set_target_properties(codisvp PROPERTIES
   PREFIX "" OUTPUT_NAME "codisvp.${CODISVP_PLATFORM}.${CODISVP_ARCH}"
   LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/addons/codisvp/bin"
